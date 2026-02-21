@@ -19,6 +19,13 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 const logInUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await authService.loginUser(req?.body);
+
+    res.cookie("token", result?.token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
     sendResponse(res, {
       statusCode: 200,
       success: true,
