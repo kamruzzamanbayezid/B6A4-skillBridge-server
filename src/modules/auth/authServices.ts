@@ -16,7 +16,24 @@ const createUser = async (
   return newResult;
 };
 
-const loginUser = async (email: string, password: string) => {};
+const loginUser = async (payload: { email: string; password: string }) => {
+  const user = await prisma.user.findUnique({
+    where: { email: payload.email },
+  });
+
+  if (!user) {
+    throw new Error("Invalid email or password!");
+  }
+
+  const isPasswordMatch = await bcrypt.compare(payload.password, user.password);
+
+  if (!isPasswordMatch) {
+    throw new Error("Invalid email or password!");
+  }
+
+  
+  return user;
+};
 
 export const authService = {
   createUser,

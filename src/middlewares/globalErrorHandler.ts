@@ -26,6 +26,10 @@ const globalErrorHandler = (
       errMessage = "Record not found!";
       simpleError = "We couldn't find what you were looking for.";
     }
+  } else if (err instanceof Error) {
+    statusCode = 401;
+    errMessage = err.message;
+    simpleError = err.message;
   }
 
   res.status(statusCode).json({
