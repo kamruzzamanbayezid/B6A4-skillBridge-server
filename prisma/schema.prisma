@@ -25,17 +25,17 @@ enum UserStatus {
 }
 
 model User {
-  id       String     @id @default(uuid())
+  id       String   @id @default(uuid())
   name     String
-  email    String     @unique
+  email    String   @unique
   password String
-  role     UserRole   @default(STUDENT)
-  isBanned UserStatus @default(ACTIVE)
+  role     UserRole @default(STUDENT)
+  isBanned Boolean  @default(false)
   image    String?
 
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  tutorsProfiles TutorsProfile?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  tutorsProfiles TutorProfile?
   bookings       Booking[]
   reviews        Review[]
 
@@ -43,7 +43,7 @@ model User {
   @@map("users")
 }
 
-model TutorsProfile {
+model TutorProfile {
   id String @id @default(uuid())
 
   userId String @unique
@@ -55,7 +55,7 @@ model TutorsProfile {
   hourlyRate   Float
 
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -68,9 +68,9 @@ model TutorsProfile {
 }
 
 model Category {
-  id            String          @id @default(uuid())
+  id            String         @id @default(uuid())
   name          String
-  tutorsProfile TutorsProfile[]
+  tutorsProfile TutorProfile[]
 
   @@map("categories")
 }
@@ -78,16 +78,17 @@ model Category {
 model Booking {
   id String @id @default(uuid())
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  studentId String
+  user      User   @relation(fields: [studentId], references: [id])
 
   tutorId String
-  tutor   TutorsProfile @relation(fields: [tutorId], references: [id])
+  tutor   TutorProfile @relation(fields: [tutorId], references: [id])
 
-  startTime  DateTime
-  endTime    DateTime
-  status     BookingStatus @default(CONFIRMED)
-  totalPrice Float
+  startTime   DateTime
+  endTime     DateTime
+  bookingDate DateTime      @default(now())
+  status      BookingStatus @default(CONFIRMED)
+  totalPrice  Float
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -104,7 +105,7 @@ model Review {
   user   User   @relation(fields: [userId], references: [id])
 
   tutorId String
-  tutor   TutorsProfile @relation(fields: [tutorId], references: [id])
+  tutor   TutorProfile @relation(fields: [tutorId], references: [id])
 
   createdAt DateTime @default(now())
 
