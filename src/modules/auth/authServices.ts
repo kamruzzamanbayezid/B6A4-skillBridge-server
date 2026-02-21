@@ -1,7 +1,7 @@
+import bcrypt from "bcryptjs";
 import { User } from "../../../generated/prisma/client";
 import config from "../../config";
 import { prisma } from "../../lib/prisma";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const createUser = async (
