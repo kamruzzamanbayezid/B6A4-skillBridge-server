@@ -72,9 +72,29 @@ const getStudentCount = async (req: Request, res: Response) => {
   }
 };
 
+const updateUserStatus = async (req: Request, res: Response) => {
+  const { id } = req?.params;
+  const { isBanned } = req.body;
+  try {
+    const result = await UserServices.updateUserStatus(id as string, isBanned);
+
+    res.status(200).json({
+      success: true,
+      message: "Users status updates successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || "Something went wrong",
+    });
+  }
+};
+
 export const UserControllers = {
   getAllTutors,
   getAllUsersOrRole,
   getStudentCount,
   getAllUsers,
+  updateUserStatus,
 };

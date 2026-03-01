@@ -93,9 +93,33 @@ const getStudentCount = async () => {
   return count;
 };
 
+const updateUserStatus = async (id: string, isBanned: boolean) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!user) {
+    throw new Error("This user isn't exists!");
+  }
+
+  const result = await prisma.user.update({
+    where: { id },
+    data: {
+      isBanned,
+    },
+  });
+
+  const { password, createdAt, updatedAt, role, image, ...newResult } = result;
+
+  return newResult;
+};
+
 export const UserServices = {
   getAllTutors,
   getStudentCount,
   getAllUsersOrRole,
   getAllUsers,
+  updateUserStatus,
 };
