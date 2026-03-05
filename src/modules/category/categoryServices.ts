@@ -19,7 +19,35 @@ const createCategory = async (payload: { name: string }) => {
 };
 
 const getALlCategories = async () => {
-  const result = await prisma.category.findMany();
+  const result = await prisma.category.findMany({
+    include: {
+      _count: {
+        select: {
+          tutors: true,
+        },
+      },
+    },
+  });
+  return result;
+};
+
+const updateCategory = async (id: string, name: string) => {
+  const isCategoryExists = await prisma.category.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!isCategoryExists) {
+    throw new Error("This category does not exist!");
+  }
+  console.log({ id, name });
+  const result = await prisma.category.update({
+    where: {
+      id,
+    },
+    data: { name },
+  });
   return result;
 };
 
@@ -46,5 +74,6 @@ const deleteCategory = async (id: string) => {
 export const categoryService = {
   createCategory,
   getALlCategories,
+  updateCategory,
   deleteCategory,
 };

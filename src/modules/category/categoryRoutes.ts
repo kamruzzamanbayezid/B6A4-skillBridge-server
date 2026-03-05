@@ -11,6 +11,11 @@ router.post(
   categoryController.createCategory,
 );
 router.get("/", categoryController.getALlCategories);
+router.patch(
+  "/update-category/:categoryId",
+  auth(UserRole.ADMIN),
+  categoryController.updateCategory,
+);
 router.delete(
   "/delete-category/:categoryId",
   auth(UserRole.ADMIN),
