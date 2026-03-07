@@ -15,7 +15,6 @@ const auth = (...roles: string[]) => {
       if (roles?.length && !roles.includes(decoded?.role)) {
         throw new Error("Unauthorized Access!!");
       }
-console.log({decoded});
       req.user = decoded;
       next();
     } catch (error) {

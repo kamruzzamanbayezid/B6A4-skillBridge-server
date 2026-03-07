@@ -91,7 +91,7 @@ model Slot {
   tutorProfileId String
   tutorProfile   TutorProfile @relation(fields: [tutorProfileId], references: [id], onDelete: Cascade)
 
-  day       String
+  day       String?
   startTime DateTime
   endTime   DateTime
 
