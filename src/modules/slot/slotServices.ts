@@ -59,4 +59,24 @@ const tutorsSlot = async (userId: string) => {
   return result;
 };
 
-export const slotServices = { createSlot, tutorsSlot };
+const deleteSlot = async (id: string) => {
+  const isSlotExist = await prisma.slot.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!isSlotExist) {
+    throw new Error("This slot is not exist!");
+  }
+
+  const result = await prisma.slot.delete({
+    where: {
+      id,
+    },
+  });
+
+  return result;
+};
+
+export const slotServices = { createSlot, tutorsSlot, deleteSlot };

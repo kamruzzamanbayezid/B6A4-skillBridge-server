@@ -32,7 +32,24 @@ const tutorsSlot = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const deleteSlot = async (req: Request, res: Response, next: NextFunction) => {
+  const slotId = req.params?.slotId;
+
+  try {
+    const result = await slotServices.deleteSlot(slotId as string);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Slot deleted successfully!",
+      data: null,
+    });
+  } catch (error: any) {
+    next(error);
+  }
+};
+
 export const slotControllers = {
   createSlot,
   tutorsSlot,
+  deleteSlot,
 };
