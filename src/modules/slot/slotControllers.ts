@@ -16,6 +16,23 @@ const createSlot = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const tutorsSlot = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.user?.id;
+
+  try {
+    const result = await slotServices.tutorsSlot(userId as string);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Slot retrieve successfully!",
+      data: result,
+    });
+  } catch (error: any) {
+    next(error);
+  }
+};
+
 export const slotControllers = {
   createSlot,
+  tutorsSlot,
 };

@@ -8,7 +8,7 @@ import config from "./config";
 import { categoryRouter } from "./modules/category/categoryRoutes";
 import { tutorProfileRoutes } from "./modules/tutorProfile/tutorProfileRoutes";
 import { UserRoutes } from "./modules/user/userRoutes";
-import { slotRouter } from "./modules/slot/slotRoutes";
+import { slotRouters } from "./modules/slot/slotRoutes";
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/tutors", tutorProfileRoutes);
 app.use("/api/v1/users", UserRoutes);
-app.use("/api/v1/slots", slotRouter);
+app.use("/api/v1/slots", slotRouters);
 
 app.get("/", (req, res) => {
   res.send("SkillBridge app for learners!!");

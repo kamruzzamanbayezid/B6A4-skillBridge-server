@@ -22,6 +22,7 @@ enum BookingStatus {
 enum SlotStatus {
   AVAILABLE
   BOOKED
+  COMPLETED
 }
 
 model User {

@@ -41,7 +41,6 @@ const updateCategory = async (id: string, name: string) => {
   if (!isCategoryExists) {
     throw new Error("This category does not exist!");
   }
-  console.log({ id, name });
   const result = await prisma.category.update({
     where: {
       id,
