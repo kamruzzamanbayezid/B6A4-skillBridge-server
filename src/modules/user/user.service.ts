@@ -116,6 +116,7 @@ const updateUserStatus = async (id: string, isBanned: boolean) => {
   return newResult;
 };
 
+
 export const UserServices = {
   getAllTutors,
   getStudentCount,

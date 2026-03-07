@@ -37,7 +37,29 @@ const logInUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getCurrentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const userId = req?.user?.id;
+
+  try {
+    const result = await authService.getCurrentUser(userId);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Current User!",
+      data: result,
+    });
+  } catch (error: any) {
+    next(error);
+  }
+};
+
 export const authController = {
   createUser,
   logInUser,
+  getCurrentUser,
 };
